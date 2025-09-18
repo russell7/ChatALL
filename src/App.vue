@@ -80,16 +80,6 @@
                 @click="clearMessages()"
               ></v-icon
               > <v-icon
-                v-shortkey="SHORTCUT_DELETE_CHAT.key"
-                @shortkey="deleteCurrentChat"
-                :id="SHORTCUT_DELETE_CHAT.elementId"
-                class="cursor-pointer"
-                color="primary"
-                icon="mdi-delete"
-                size="x-large"
-                style="display: none"
-              ></v-icon
-              > <v-icon
                 v-shortkey="SHORTCUT_SETTINGS.key"
                 @shortkey="openSettingsModal"
                 :id="SHORTCUT_SETTINGS.elementId"
@@ -183,7 +173,6 @@ import {
   SHORTCUT_CLEAR_MESSAGES,
   SHORTCUT_CHAT_DRAWER,
   SHORTCUT_APP_BAR,
-  SHORTCUT_DELETE_CHAT,
 } from "./components/ShortcutGuide/shortcut.const";
 
 import i18n from "./i18n";
@@ -282,37 +271,6 @@ async function clearMessages() {
   );
   if (result) {
     store.commit("clearMessages");
-  }
-}
-
-async function deleteCurrentChat() {
-  const isDirectDelete = store.state.general.isSkipDeleteChatConfirm;
-
-  if (isDirectDelete) {
-    await Chats.update(store.state.currentChatIndex, { hide: true });
-    await selectLatestVisibleChat();
-  } else {
-    const result = await confirmModal.value.showModal(
-      i18n.global.t("modal.confirmHideChat"),
-    );
-    if (result) {
-      await Chats.update(store.state.currentChatIndex, { hide: true });
-      await selectLatestVisibleChat();
-    }
-  }
-}
-
-async function selectLatestVisibleChat() {
-  const latestChat = await Chats.table
-    .orderBy("modifiedTime")
-    .reverse()
-    .filter((chat) => !chat.hide)
-    .first();
-  if (latestChat) {
-    store.commit("selectChat", latestChat.index);
-  } else {
-    // if there is no visible chat, create a new chat
-    store.commit("selectChat", await Chats.add());
   }
 }
 
