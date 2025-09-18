@@ -16,7 +16,7 @@
     "dark": "Dark",
     "bots": "AI Bots",
     "showMenuBar": "Show Menu Bar",
-    "skipDeleteChatConfirm": "Delete chat without confirmation"
+    "skipDeleteChatConfirm": "Delete chat without confirm"
   },
   "common": {
     "apiKey": "API Key"

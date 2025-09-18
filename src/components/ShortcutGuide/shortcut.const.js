@@ -95,7 +95,7 @@ export const SHORTCUT_PROMPT_MANAGEMENT = {
 
 export const SHORTCUT_DELETE_CHAT = {
   elementId: "delete-chat-btn",
-  key: [modifier, "shift", "d"],
+  key: [modifier, "shift", "Delete"],
   offset: {
     top: 40,
   },
